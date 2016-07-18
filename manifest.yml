@@ -1,0 +1,13 @@
+name: pivotaltrackermirror
+memory: 1024M
+instances: 1
+path: ./target/pivotaltrackermirror-1.0.0.war
+buildpack: java_buildpack
+env:
+  admin_password: MyP@$$w0rd
+  admin_username: my@dm1n
+  github_token: replacewithyourtoken
+  pivotaltracker_token: replacewithyourtoken
+  spring_profiles_active: cloud
+  refresh_mirror_after_minutes: "120"
+disk_quota: 1024M

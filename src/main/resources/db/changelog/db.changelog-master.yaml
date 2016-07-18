@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: arthurhalet
+      changes:
+        - createTable:
+            tableName: mirror_reference
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: pivotal_tracker_project_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: target
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+                  constraints:
+                    nullable: true
+              - column:
+                  name: secret
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+  - include:
+     file: db/changelog/db.quartz.xml

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title>Pivotal Tracker Mirror</title>
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon"/>
+    <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon"/>
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link href="assets/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="assets/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+</head>
+<body>
+<div id="wrapper">
+    <nav class="blue-cf lighten-1" role="navigation">
+        <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">
+            <img src="assets/images/cloud-foundry-logo.png" class="border-5"/> Pivotal Tracker Mirror
+        </a>
+        </div>
+    </nav>
+    <div class="section">
+        <div class="container">
+            <div class="button-header">
+                <a href="#createMirrorModal" class="btn waves-effect waves-light green modal-trigger"><i
+                        class="material-icons left">add</i>Create One</a>
+                <h2 class="header center grey-text darken-3">Mirrors Referenced</h2>
+            </div>
+            <!--/*@thymesVar id="mirrorReferences" type="java.util.List<com.orange.clara.pivotaltrackermirror.model.response.MirrorReferenceResponse>"*/-->
+            <div th:if="${mirrorReferences == null or mirrorReferences.isEmpty()}">
+                <h6>There is no mirror referenced</h6>
+            </div>
+            <div th:if="${mirrorReferences != null and mirrorReferences.isEmpty() == false}">
+                <table id="mirror-table"
+                       class="highlight bordered responsive-table">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Pivotal tracker project</th>
+                        <th>Target</th>
+                        <th>Type</th>
+                        <th>Last Update</th>
+                        <th>Current Job Status</th>
+                        <th>Control</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="mirrorReference : ${mirrorReferences}">
+                        <td>
+                            <span th:text="${mirrorReference.id}"></span></td>
+                        <td>
+                            <a th:href="${'https://www.pivotaltracker.com/n/projects/'+ mirrorReference.pivotalTrackerProjectId}"
+                               th:text="${mirrorReference.pivotalTrackerProjectId}"></a></td>
+                        <td><a th:href="${mirrorReference.targetLink}"
+                               th:text="${mirrorReference.target}"></a></td>
+                        <td>
+                            <span th:text="${mirrorReference.type}"></span>
+                        </td>
+                        <td>
+                            <span th:if="${mirrorReference.updatedAt != null}"
+                                  th:text="${T(org.apache.commons.lang3.time.DateFormatUtils).format(mirrorReference.updatedAt, 'yyyy-MM-dd HH:mm', timeZone)}">date</span>
+                        </td>
+                        <td>
+                            <span th:text="${mirrorReference.jobStatus.name().toLowerCase().replace('_', ' ')}"></span>
+                        </td>
+                        <td>
+                            <a class="btn waves-effect tooltipped btn-floating waves-light red delete-mirror"
+                               th:href="${'/api/mirrorReference/'+ mirrorReference.id}"><i
+                                    class="material-icons">delete</i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="errorModal" class="modal bottom-sheet">
+        <div class="modal-content">
+            <h4>Modal Header</h4>
+            <p>A bunch of text</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+        </div>
+    </div>
+    <div id="createMirrorModal" class="modal bottom-sheet">
+        <div class="modal-content">
+            <div class="row">
+                <h2>Mirror a new pivotal tracker project</h2>
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input placeholder="e.g: https://www.pivotaltracker.com/n/projects/1441714" id="pivotalid"
+                                   type="text" class="validate blue-cf-lighten-1"/>
+                            <label for="pivotalid">Pivotal tracker project</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input placeholder="e.g: myuser/myrepo" id="target" type="text"
+                                   class="validate blue-cf-lighten-1"/>
+                            <label for="target">Target</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select class="blue-cf-lighten-1" id="converter">
+                                <option value="" disabled="disabled" selected="selected">Choose your converter</option>
+                                <option th:each="converterType : ${T(com.orange.clara.pivotaltrackermirror.model.ConverterType).values()}"
+                                        th:value="${converterType}"
+                                        th:text="${converterType.name().toLowerCase().replace('_',' ')}"></option>
+                            </select>
+                            <label for="converter">Converter</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <button class="btn waves-effect waves-light blue-cf" type="submit" name="action">Mirror
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="page-footer blue-cf">
+        <div class="footer-copyright">
+            <div class="container">
+                <!-- you should remove it for your project -->
+                Made by <a class="orange-text text-lighten-3" href="https://github.com/Orange-OpenSource/elpaaso">ElPaaSo
+                Team<img src="assets/images/orange_logo.png"
+                         style="float: left; margin-right: 3px;margin-top: 8px;"/></a>
+                <!---->
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!--  Scripts-->
+<script src="assets/js/jquery-2.1.4.min.js"></script>
+<script src="assets/js/materialize.min.js"></script>
+<script src="assets/js/init.js"></script>
+</body>
+</html>

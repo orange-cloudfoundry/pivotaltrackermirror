@@ -1,0 +1,45 @@
+(function ($) {
+    $(function () {
+        $('select').material_select();
+        $('.modal-trigger').leanModal();
+
+        $('#createMirrorModal form button[type=submit]').click(function () {
+            var pivotalId = parseInt($('#createMirrorModal #pivotalid').val().replace("https://www.pivotaltracker.com/n/projects/", ""));
+
+            $.ajax({
+                dataType: "json",
+                url: "/api/mirrorReference",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    "pivotalTrackerProjectId": pivotalId,
+                    "target": $('#createMirrorModal #target').val(),
+                    "type": $('#createMirrorModal #converter').val(),
+                    "secret": "nothing"
+                })
+            }).done(function () {
+                location.reload();
+            }).fail(function (data) {
+                $('#errorModal h4').html("Error " + data.status);
+                $('#errorModal p').html(data.message);
+                $('#errorModal').openModal();
+            });
+            return false;
+        });
+        $('a.delete-mirror').click(function () {
+            $.ajax({
+                dataType: "json",
+                url: $(this).attr('href'),
+                method: "DELETE",
+                contentType: "application/json"
+            }).done(function () {
+                location.reload();
+            }).fail(function (data) {
+                $('#errorModal h4').html("Error " + data.status);
+                $('#errorModal p').html(data.message);
+                $('#errorModal').openModal();
+            });
+            return false;
+        });
+    }); // end of document ready
+})(jQuery); // end of jQuery name space

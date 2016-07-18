@@ -1,0 +1,2 @@
+logging.level.com.orange.clara.pivotaltrackermirror: DEBUG
+logging.level.onespot.pivotal.api: DEBUG
