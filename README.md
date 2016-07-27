@@ -39,11 +39,12 @@ Then regularly, PT stories are mirrored into GH issues. See sample partial attem
 
 List of mirrored stories
 
-![screenshot211](https://cloud.githubusercontent.com/assets/4748380/17189863/c3ddb42a-5443-11e6-8cbe-fe389181a813.png)
+![screenshot212](https://cloud.githubusercontent.com/assets/4748380/17189865/c546f448-5443-11e6-8a14-12f19eefc592.png)
+
 
 A sample mirrored story with comments
 
-![screenshot212](https://cloud.githubusercontent.com/assets/4748380/17189865/c546f448-5443-11e6-8a14-12f19eefc592.png)
+![screenshot211](https://cloud.githubusercontent.com/assets/4748380/17189863/c3ddb42a-5443-11e6-8cbe-fe389181a813.png)
 
 Note that screenshots may be out of date w.r.t. latest code improvements.
 
