@@ -18,7 +18,9 @@ Mirroring a PT projet stories into github issues provides the following benefits
 2. run `mvn clean install``
 3. set env var (see below)
 4. if you have a cloud foundry instance, create a database service and add this service to the  [manifest.yml](/manifest.yml) and do `cf push` otherwise run `java -jar ./target/pivotaltrackermirror-1.0.0.war
-5. go to url provided by cloud foundry or http://localhost:8080
+5. go to url provided by cloud foundry or http://localhost:8080 and manage mirrors through the UI:
+
+![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
 
 ### Necessary env vars
 
