@@ -12,15 +12,12 @@ Mirroring a PT projet stories into github issues provides the following benefits
 * leverage [github search features](https://help.github.com/articles/searching-github) to search PT content (e.g. accross multiple  mirrored PT projects, or along with other github repositories)
 * leverage [github @mentions](https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams) to contact github accounts associated with PT public projects contributors, in the context with a specific mirrored story
 
-## Use it
+## Deploy it
 
 1. clone this repo and `cd` to the new directory
 2. run `mvn clean install``
 3. set env var (see below)
 4. if you have a cloud foundry instance, create a database service and add this service to the  [manifest.yml](/manifest.yml) and do `cf push` otherwise run `java -jar ./target/pivotaltrackermirror-1.0.0.war
-5. go to url provided by cloud foundry or http://localhost:8080 and manage mirrors through the UI:
-
-![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
 
 ### Necessary env vars
 
@@ -31,6 +28,24 @@ Mirroring a PT projet stories into github issues provides the following benefits
 | github_token                 | *NONE*             |
 | pivotaltracker_token         | *NONE*             |
 | refresh_mirror_after_minutes | 120                |
+
+## Use it
+
+Go to url of the app deployed on cloud foundry or http://localhost:8080 for local deployments and manage mirrors through the UI:
+
+![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
+
+Then regularly, PT stories are mirrored into GH issues. See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
+
+List of mirrored stories
+![screenshot211](https://cloud.githubusercontent.com/assets/4748380/17189863/c3ddb42a-5443-11e6-8cbe-fe389181a813.png)
+
+A sample mirrored story with comments
+![screenshot212](https://cloud.githubusercontent.com/assets/4748380/17189865/c546f448-5443-11e6-8a14-12f19eefc592.png)
+
+Note that screenshots may be out of date w.r.t. latest code improvements.
+
+
 
 ## Project history and relations to cloud foundry community
 
