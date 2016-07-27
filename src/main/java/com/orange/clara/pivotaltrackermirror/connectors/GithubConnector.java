@@ -60,12 +60,14 @@ public class GithubConnector implements Connector<Issue, Comment> {
         try {
             if (mirrorReference.getUpdatedAt() == null) {
                 logger.debug("Posting new issue on github with title '{}'.", issue.getTitle());
+                this.waitSend();
                 return this.issueService.createIssue(repositoryId, issue);
             }
             Integer storyId = this.getStoryIdFromIssueTitle(issue);
             Issue existingIssue = this.findIssue(repositoryId, storyId);
             if (existingIssue == null) {
                 logger.debug("Posting new issue on github with title '{}' because no existing was found.", issue.getTitle());
+                this.waitSend();
                 return this.issueService.createIssue(repositoryId, issue);
             }
             issue.setNumber(existingIssue.getNumber());
@@ -73,6 +75,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
                 return issue;
             }
             logger.debug("Editing existing issue on github with title '{}'.", issue.getTitle());
+            this.waitSend();
             return this.issueService.editIssue(repositoryId, issue);
         } catch (IOException e) {
             throw new ConnectorPostStoryException(e.getMessage(), e);
@@ -85,12 +88,14 @@ public class GithubConnector implements Connector<Issue, Comment> {
         try {
             if (mirrorReference.getUpdatedAt() == null) {
                 logger.debug("Posting new comment on issue '{}' on github", issue.getNumber());
+                this.waitSend();
                 return this.issueService.createComment(repositoryId, issue.getNumber(), comment.getBody());
             }
             Integer commentId = this.getCommentIdFromCommentGithub(comment);
             Comment existingComment = this.findComment(repositoryId, issue.getNumber(), commentId);
             if (existingComment == null) {
                 logger.debug("Posting new comment on issue '{}' on github because no existing was found", issue.getNumber());
+                this.waitSend();
                 return this.issueService.createComment(repositoryId, issue.getNumber(), comment.getBody());
             }
             comment.setId(existingComment.getId());
@@ -98,10 +103,12 @@ public class GithubConnector implements Connector<Issue, Comment> {
                 return comment;
             }
             logger.debug("Editing existing comment on issue '{}' on github", issue.getNumber());
+            this.waitSend();
             return this.issueService.editComment(repositoryId, comment);
         } catch (IOException e) {
             throw new ConnectorPostCommentException(e.getMessage(), e);
         }
+
     }
 
     @Override
@@ -126,6 +133,14 @@ public class GithubConnector implements Connector<Issue, Comment> {
         Comment githubComment = new Comment();
         githubComment.setBody(this.createBodyComment(comment));
         return githubComment;
+    }
+
+    protected void waitSend() throws ConnectorException {
+        try {
+            Thread.sleep(2000L);
+        } catch (InterruptedException e) {
+            throw new ConnectorException(e.getMessage(), e);
+        }
     }
 
     private Label createLabelForStatus(Story.StoryState storyState) {
@@ -241,7 +256,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
             commentBody.add("- **User**: " + comment.getPerson().name);
         }
 
-        commentBody.add("\n" + comment.getText() + "\n");
+        commentBody.add("\n" + this.sanitizer(comment.getText()) + "\n");
         commentBody.add(COMMENT_ID_KEY + comment.getId());
         return Joiner.on("\n").join(commentBody);
     }
@@ -263,8 +278,12 @@ public class GithubConnector implements Connector<Issue, Comment> {
             storyBody.add("- **Estimate**: " + story.estimate);
         }
 
-        storyBody.add("\n" + story.description);
+        storyBody.add("\n" + this.sanitizer(story.description));
         return Joiner.on("\n").join(storyBody);
+    }
+
+    private String sanitizer(String text) {
+        return text.replace(" @", "");
     }
 
     public IssueService getIssueService() {

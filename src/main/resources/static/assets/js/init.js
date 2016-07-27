@@ -36,7 +36,7 @@
                 location.reload();
             }).fail(function (data) {
                 $('#errorModal h4').html("Error " + data.status);
-                $('#errorModal p').html(data.message);
+                $('#errorModal .modal-content p').html(data.message);
                 $('#errorModal').openModal();
             });
             return false;

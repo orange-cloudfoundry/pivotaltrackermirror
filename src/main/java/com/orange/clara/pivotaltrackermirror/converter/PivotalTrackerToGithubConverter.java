@@ -27,24 +27,8 @@ public class PivotalTrackerToGithubConverter extends AbstractPivotalTrackerConve
 
 
     @Override
-    protected Issue sendStory(MirrorReference mirrorReference, Issue convertedStory) throws ConnectorException {
-        Issue issue = super.sendStory(mirrorReference, convertedStory);
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            throw new ConnectorException(e.getMessage(), e);
-        }
-        return issue;
-    }
-
-    @Override
-    protected void sendComments(MirrorReference mirrorReference, Issue story, List<onespot.pivotal.api.resources.Comment> comments) throws ConnectorException {
-        super.sendComments(mirrorReference, story, comments);
-        try {
-            Thread.sleep(1000L);
-        } catch (InterruptedException e) {
-            throw new ConnectorException(e.getMessage(), e);
-        }
+    public String createLink(MirrorReference mirrorReference) {
+        return "https://github.com/" + mirrorReference.getTarget() + "/issues";
     }
 
     @Override

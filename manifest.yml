@@ -1,5 +1,6 @@
 name: pivotaltrackermirror
 memory: 1024M
+timeout: 180
 instances: 1
 path: ./target/pivotaltrackermirror-1.0.0.war
 buildpack: java_buildpack

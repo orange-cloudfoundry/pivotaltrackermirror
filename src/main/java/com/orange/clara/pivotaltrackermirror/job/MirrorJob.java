@@ -1,7 +1,5 @@
 package com.orange.clara.pivotaltrackermirror.job;
 
-import com.orange.clara.pivotaltrackermirror.exceptions.CannotFindConverterException;
-import com.orange.clara.pivotaltrackermirror.exceptions.ConvertException;
 import com.orange.clara.pivotaltrackermirror.exceptions.MirrorJobExecutionException;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
 import com.orange.clara.pivotaltrackermirror.repos.MirrorReferenceRepo;
@@ -50,7 +48,7 @@ public class MirrorJob implements Job {
         }
         try {
             this.mirrorService.mirror(mirrorReference);
-        } catch (CannotFindConverterException | ConvertException e) {
+        } catch (Exception e) {
             throw new MirrorJobExecutionException(e.getMessage(), e, false);
         }
         mirrorReference.setUpdatedAt(Calendar.getInstance().getTime());
