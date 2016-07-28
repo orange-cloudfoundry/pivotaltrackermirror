@@ -55,6 +55,6 @@ Note that screenshots may be out of date w.r.t. latest code improvements.
 
 This project originated as a POC to help the Cf community track progress of the CF pivotal tracker stories used to drive the cloudfoundry backlog and features (see [full list](https://github.com/cloudfoundry-community/cf-docs-contrib/wiki) in the sidebar). 
 
-Currently there is no way for non project members to subscribe to PT story updates, see related [cf-dev thread](http://cf-dev.70369.x6.nabble.com/cf-dev-FW-issue-tracker-permissions-tt2763.html#a5014) or https://github.com/cloudfoundry/cli/issues/560#issuecomment-156846815 where CLI team PM tried to add non-team members to provide ways to check story status), by leveraging github watch features to selectively subscribe to existing mirrored stories, or up-to-come future stories.
+Currently there is no way for non project members to subscribe to PT story updates, see related [cf-dev thread](http://cf-dev.70369.x6.nabble.com/cf-dev-FW-issue-tracker-permissions-tt2763.html#a5014) or https://github.com/cloudfoundry/cli/issues/560#issuecomment-156846815 where CLI team PM tried to add non-team members to provide ways to check story status), or to comment on stories.
 
-Thsi project is also trying to make it easier for the cloudfoundry community to interact with cloud foundry core contributors and suggest product ideas or comment current progresses/decisions/investigations.
+This project is generally trying to make it easier for the cloudfoundry community to interact with cloud foundry core contributors and suggest product ideas or comment current progresses/decisions/investigations.
