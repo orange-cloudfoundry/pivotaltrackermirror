@@ -30,8 +30,9 @@ public abstract class AbstractPivotalTrackerConverter<T, P> implements PivotalTr
     }
 
     @Override
-    public void convert(MirrorReference mirrorReference, StoryCompleteReference storyCompleteReference) throws ConvertException {
+    public void convert(MirrorReference mirrorReference, StoryCompleteReference storyCompleteReference, String token) throws ConvertException {
         logger.debug("Converting {}", storyCompleteReference.getId());
+        this.connector.loadClient(token);
         T convertedStory = this.connector.convertStory(storyCompleteReference);
         try {
             T finalStory = this.sendStory(mirrorReference, convertedStory);
@@ -43,9 +44,9 @@ public abstract class AbstractPivotalTrackerConverter<T, P> implements PivotalTr
     }
 
     @Override
-    public void convert(MirrorReference mirrorReference, List<StoryCompleteReference> storyCompleteReferences) throws ConvertException {
+    public void convert(MirrorReference mirrorReference, List<StoryCompleteReference> storyCompleteReferences, String token) throws ConvertException {
         for (StoryCompleteReference storyCompleteReference : storyCompleteReferences) {
-            this.convert(mirrorReference, storyCompleteReference);
+            this.convert(mirrorReference, storyCompleteReference, token);
         }
     }
 

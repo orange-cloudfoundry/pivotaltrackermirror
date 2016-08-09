@@ -5,7 +5,6 @@ import com.orange.clara.pivotaltrackermirror.converter.PivotalTrackerToGithubCon
 import com.orange.clara.pivotaltrackermirror.exceptions.CannotFindConverterException;
 import com.orange.clara.pivotaltrackermirror.model.ConverterType;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -25,23 +24,20 @@ import java.util.Map;
 @Component
 public class PivotalTrackerConverterFactory {
 
-    @Autowired
-    private PivotalTrackerToGithubConverter pivotalTrackerToGithubConverter;
-
-    private Map<ConverterType, PivotalTrackerConverter> converters;
+    private Map<ConverterType, Class<? extends PivotalTrackerConverter>> converters;
 
     @PostConstruct
     public void convertersLoad() {
         converters = new HashMap<>();
-        converters.put(ConverterType.GITHUB, pivotalTrackerToGithubConverter);
+        converters.put(ConverterType.GITHUB, PivotalTrackerToGithubConverter.class);
     }
 
-    public PivotalTrackerConverter getPivotalTrackerConverter(ConverterType converterType) {
-        return this.converters.get(converterType);
+    public PivotalTrackerConverter getPivotalTrackerConverter(ConverterType converterType) throws IllegalAccessException, InstantiationException {
+        return this.converters.get(converterType).newInstance();
     }
 
-    public PivotalTrackerConverter getPivotalTrackerConverter(MirrorReference mirrorReference) throws CannotFindConverterException {
-        PivotalTrackerConverter converter = this.converters.get(mirrorReference.getType());
+    public PivotalTrackerConverter getPivotalTrackerConverter(MirrorReference mirrorReference) throws CannotFindConverterException, InstantiationException, IllegalAccessException {
+        PivotalTrackerConverter converter = getPivotalTrackerConverter(mirrorReference.getType());
         if (converter == null) {
             throw new CannotFindConverterException("Cannot find converter " + mirrorReference.getType());
         }

@@ -9,7 +9,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = PivotaltrackerMirror.class)
 @WebAppConfiguration
-public class Pivotaltracker2githubApplicationTests {
+public class PivotaltrackerMirrorApplicationTests {
 
 	@Test
 	public void contextLoads() {

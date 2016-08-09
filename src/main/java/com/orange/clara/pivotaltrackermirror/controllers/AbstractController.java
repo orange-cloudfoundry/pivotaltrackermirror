@@ -36,17 +36,15 @@ public abstract class AbstractController {
             return JobStatus.RUNNING;
         }
         Trigger.TriggerState triggerState = scheduler.getTriggerState(triggerKey);
-        if (triggerState.equals(Trigger.TriggerState.BLOCKED)
-                || triggerState.equals(Trigger.TriggerState.ERROR)
-                || triggerState.equals(Trigger.TriggerState.PAUSED)
-                || triggerState.equals(Trigger.TriggerState.COMPLETE)) {
+        if (mirrorReference.getLastJobStatus().equals(JobStatus.RUNNING)
+                && (
+                triggerState.equals(Trigger.TriggerState.BLOCKED)
+                        || triggerState.equals(Trigger.TriggerState.ERROR)
+                        || triggerState.equals(Trigger.TriggerState.PAUSED)
+                        || triggerState.equals(Trigger.TriggerState.COMPLETE)
+        )) {
             return JobStatus.valueOf(scheduler.getTriggerState(triggerKey).name());
         }
-        Trigger trigger = scheduler.getTrigger(triggerKey);
-        if (trigger.getPreviousFireTime().before(mirrorReference.getUpdatedAt())
-                || trigger.getPreviousFireTime().equals(mirrorReference.getUpdatedAt())) {
-            return JobStatus.COMPLETE;
-        }
-        return JobStatus.RUNNING;
+        return mirrorReference.getLastJobStatus();
     }
 }

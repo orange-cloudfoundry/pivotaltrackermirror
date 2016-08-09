@@ -26,6 +26,10 @@ public class MirrorReference {
 
     protected Date updatedAt;
 
+    @Enumerated(EnumType.STRING)
+    protected JobStatus lastJobStatus;
+
+    protected String lastJobErrorMessage;
 
     @Enumerated(EnumType.STRING)
     protected ConverterType type;
@@ -34,6 +38,7 @@ public class MirrorReference {
 
     public MirrorReference() {
         updatedAt = Calendar.getInstance().getTime();
+        lastJobStatus = JobStatus.SCHEDULED;
     }
 
     public int getId() {
@@ -82,5 +87,21 @@ public class MirrorReference {
 
     public void setType(ConverterType type) {
         this.type = type;
+    }
+
+    public JobStatus getLastJobStatus() {
+        return lastJobStatus;
+    }
+
+    public void setLastJobStatus(JobStatus lastJobStatus) {
+        this.lastJobStatus = lastJobStatus;
+    }
+
+    public String getLastJobErrorMessage() {
+        return lastJobErrorMessage;
+    }
+
+    public void setLastJobErrorMessage(String lastJobErrorMessage) {
+        this.lastJobErrorMessage = lastJobErrorMessage;
     }
 }

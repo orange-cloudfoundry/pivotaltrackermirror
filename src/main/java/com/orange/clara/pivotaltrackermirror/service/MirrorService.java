@@ -38,8 +38,13 @@ public class MirrorService {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public void mirror(MirrorReference mirrorReference) throws CannotFindConverterException, ConvertException {
-        PivotalTrackerConverter converter = converterFactory.getPivotalTrackerConverter(mirrorReference);
+    public void mirror(MirrorReference mirrorReference, String token) throws CannotFindConverterException, ConvertException {
+        PivotalTrackerConverter converter = null;
+        try {
+            converter = converterFactory.getPivotalTrackerConverter(mirrorReference);
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new ConvertException(e.getMessage(), e);
+        }
         ProjectDAO projectDAO = pivotalTracker.projects().id(mirrorReference.getPivotalTrackerProjectId());
         logger.debug("Getting stories for project {}", mirrorReference.getPivotalTrackerProjectId());
         List<Story> stories;
@@ -64,6 +69,6 @@ public class MirrorService {
                             projectDAO.stories().id(story.getId()).comments().get()
                     ));
         }
-        converter.convert(mirrorReference, storyCompleteReferences);
+        converter.convert(mirrorReference, storyCompleteReferences, token);
     }
 }

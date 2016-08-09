@@ -17,9 +17,9 @@ import java.util.List;
  * Date: 13/07/2016
  */
 public interface PivotalTrackerConverter {
-    void convert(MirrorReference mirrorReference, StoryCompleteReference storyCompleteReference) throws ConvertException;
+    void convert(MirrorReference mirrorReference, StoryCompleteReference storyCompleteReference, String token) throws ConvertException;
 
-    void convert(MirrorReference mirrorReference, List<StoryCompleteReference> storyCompleteReferences) throws ConvertException;
+    void convert(MirrorReference mirrorReference, List<StoryCompleteReference> storyCompleteReferences, String token) throws ConvertException;
 
     String createLink(MirrorReference mirrorReference);
 }

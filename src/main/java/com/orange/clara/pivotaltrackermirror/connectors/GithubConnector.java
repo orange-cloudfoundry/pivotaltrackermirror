@@ -5,14 +5,20 @@ import com.google.common.collect.Lists;
 import com.orange.clara.pivotaltrackermirror.exceptions.ConnectorException;
 import com.orange.clara.pivotaltrackermirror.exceptions.ConnectorPostCommentException;
 import com.orange.clara.pivotaltrackermirror.exceptions.ConnectorPostStoryException;
+import com.orange.clara.pivotaltrackermirror.github.client.ProxyGithubClient;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
+import com.orange.clara.pivotaltrackermirror.util.MarkdownSanitizer;
 import onespot.pivotal.api.resources.Story;
 import org.eclipse.egit.github.core.*;
+import org.eclipse.egit.github.core.client.GitHubClient;
 import org.eclipse.egit.github.core.service.IssueService;
+import org.eclipse.egit.github.core.service.LabelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,12 +40,14 @@ public class GithubConnector implements Connector<Issue, Comment> {
     protected final static String COMMENT_ID_KEY = "Comment Id: ";
     protected final static String STORY_ID_PATTERN = ".*" + STORY_ID_KEY + "([0-9]+)$";
     protected final static String COMMENT_ID_PATTERN = "^" + COMMENT_ID_KEY + "([0-9]+)$";
+    protected final static String DATE_SHORT_PATTERN = "MMM d, yyyy z";
+    protected final static String DATE_LONG_PATTERN = "MMM d, yyyy, h.mm a z";
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private IssueService issueService;
+    private LabelService labelService;
 
-    public GithubConnector(IssueService issueService) {
-        this.issueService = issueService;
+    public GithubConnector() {
     }
 
     protected RepositoryId getRepositoryId(String target) throws ConnectorException {
@@ -58,6 +66,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
 
         RepositoryId repositoryId = this.getRepositoryId(mirrorReference.getTarget());
         try {
+            this.createLabelsOnGithub(repositoryId, issue.getLabels());
             if (mirrorReference.getUpdatedAt() == null) {
                 logger.debug("Posting new issue on github with title '{}'.", issue.getTitle());
                 this.waitSend();
@@ -123,6 +132,10 @@ public class GithubConnector implements Connector<Issue, Comment> {
         List<Label> labels = Lists.newArrayList();
         labels.add(this.createLabelForStatus(story.currentState));
         labels.add(new Label().setName(story.storyType.name()));
+        if (story.getLabels() != null) {
+            labels.addAll(this.convertLabel(story.getLabels()));
+        }
+
         issue.setLabels(labels);
         issue.setBody(this.createBodyStory(story));
         return issue;
@@ -133,6 +146,30 @@ public class GithubConnector implements Connector<Issue, Comment> {
         Comment githubComment = new Comment();
         githubComment.setBody(this.createBodyComment(comment));
         return githubComment;
+    }
+
+    @Override
+    public void loadClient(String token) {
+        if (issueService != null) {
+            return;
+        }
+        GitHubClient client = new ProxyGithubClient();
+        if (token != null) {
+            client.setOAuth2Token(token);
+        }
+        this.issueService = new IssueService(client);
+        this.labelService = new LabelService(client);
+    }
+
+    private void createLabelsOnGithub(RepositoryId repositoryId, List<Label> labels) throws IOException {
+        List<Label> existingLabels = this.labelService.getLabels(repositoryId);
+        for (Label label : labels) {
+            if (existingLabels.contains(label)) {
+                continue;
+            }
+            this.labelService.createLabel(repositoryId, label);
+        }
+
     }
 
     protected void waitSend() throws ConnectorException {
@@ -251,22 +288,26 @@ public class GithubConnector implements Connector<Issue, Comment> {
 
     protected String createBodyComment(onespot.pivotal.api.resources.Comment comment) {
         List<String> commentBody = Lists.newArrayList();
-        commentBody.add("- **Link**: " + comment.getUrl());
+        String personName = "*Anonymous*";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_LONG_PATTERN);
         if (comment.getPerson() != null) {
-            commentBody.add("- **User**: " + comment.getPerson().name);
+            personName = comment.getPerson().name;
         }
-
-        commentBody.add("\n" + this.sanitizer(comment.getText()) + "\n");
-        commentBody.add(COMMENT_ID_KEY + comment.getId());
+        commentBody.add(String.format("%s [commented](%s) on %s:", personName, comment.getUrl(), dateFormat.format(Date.from(comment.updatedAt))));
+        commentBody.add("\n" + MarkdownSanitizer.sanitize(comment.getText()) + "\n");
+        commentBody.add("<!--\n" + COMMENT_ID_KEY + comment.getId() + "\n-->");
         return Joiner.on("\n").join(commentBody);
     }
 
     protected String createBodyStory(Story story) {
         List<String> storyBody = Lists.newArrayList();
-        storyBody.add("- **Link**: " + story.getUrl());
-        if (story.getLabels() != null) {
-            storyBody.add("- **Labels**: " + Joiner.on(", ").join(this.convertLabel(story.getLabels()).stream().map(Label::getName).collect(Collectors.toList())));
-        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_SHORT_PATTERN);
+
+        storyBody.add(MarkdownSanitizer.sanitize(story.description) + "\n");
+
+        storyBody.add("---");
+
+        storyBody.add(String.format("\nMirror: [story %s](%s) submitted on %s", story.id, story.getUrl(), dateFormat.format(Date.from(story.getCreatedAt()))));
         if (story.requester != null && story.requester.name != null) {
             storyBody.add("- **Requester**: " + story.requester.name);
         }
@@ -277,14 +318,9 @@ public class GithubConnector implements Connector<Issue, Comment> {
         if (story.estimate >= 0) {
             storyBody.add("- **Estimate**: " + story.estimate);
         }
-
-        storyBody.add("\n" + this.sanitizer(story.description));
         return Joiner.on("\n").join(storyBody);
     }
 
-    private String sanitizer(String text) {
-        return text.replace(" @", "");
-    }
 
     public IssueService getIssueService() {
         return issueService;

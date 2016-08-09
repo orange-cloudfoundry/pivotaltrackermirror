@@ -1,13 +1,10 @@
 package com.orange.clara.pivotaltrackermirror.converter;
 
 
-import com.orange.clara.pivotaltrackermirror.connectors.Connector;
-import com.orange.clara.pivotaltrackermirror.exceptions.ConnectorException;
+import com.orange.clara.pivotaltrackermirror.connectors.GithubConnector;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
 import org.eclipse.egit.github.core.Comment;
 import org.eclipse.egit.github.core.Issue;
-
-import java.util.List;
 
 /**
  * Copyright (C) 2016 Orange
@@ -21,8 +18,8 @@ import java.util.List;
  */
 public class PivotalTrackerToGithubConverter extends AbstractPivotalTrackerConverter<Issue, Comment> {
 
-    public PivotalTrackerToGithubConverter(Connector<Issue, Comment> connector) {
-        super(connector);
+    public PivotalTrackerToGithubConverter() {
+        super(new GithubConnector());
     }
 
 
@@ -31,8 +28,4 @@ public class PivotalTrackerToGithubConverter extends AbstractPivotalTrackerConve
         return "https://github.com/" + mirrorReference.getTarget() + "/issues";
     }
 
-    @Override
-    public String createLink(MirrorReference mirrorReference) {
-        return "https://github.com/" + mirrorReference.getTarget() + "/issues";
-    }
 }

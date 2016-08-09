@@ -1,3 +1,4 @@
+logging.level.com.orange.clara.pivotaltrackermirror: DEBUG
 spring:
   jpa:
     hibernate:

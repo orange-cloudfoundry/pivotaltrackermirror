@@ -24,4 +24,6 @@ public interface Connector<T, P> {
     T convertStory(Story story);
 
     P convertComment(Comment comment);
+
+    void loadClient(String token);
 }

@@ -38,5 +38,22 @@ databaseChangeLog:
                   type: varchar(20)
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 2
+      author: arthurhalet
+      changes:
+      - addColumn:
+          tableName: mirror_reference
+          columns:
+          - column:
+              name: last_job_status
+              type: varchar(60)
+              constraints:
+                nullable: true
+          - column:
+              name: last_job_error_message
+              type: varchar(600)
+              constraints:
+                nullable: true
   - include:
      file: db/changelog/db.quartz.xml

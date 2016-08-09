@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Date: 18/07/2016
  */
 @RestController
-@RequestMapping("/api/task")
+@RequestMapping("/api/tasks")
 public class TaskStatusController extends AbstractController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -32,7 +32,7 @@ public class UiController extends AbstractController {
     private PivotalTrackerConverterFactory converterFactory;
 
     @RequestMapping("/")
-    public String index(Model model, TimeZone timeZone) throws SchedulerException, CannotFindConverterException {
+    public String index(Model model, TimeZone timeZone) throws SchedulerException, CannotFindConverterException, IllegalAccessException, InstantiationException {
         List<MirrorReferenceResponse> mirrorReferenceResponseList = Lists.newArrayList();
         Iterable<MirrorReference> mirrorReferences = this.mirrorReferenceRepo.findAll();
         for (MirrorReference mirrorReference : mirrorReferences) {

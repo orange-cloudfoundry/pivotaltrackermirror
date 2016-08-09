@@ -5,6 +5,7 @@ import com.orange.clara.pivotaltrackermirror.exceptions.CannotFindConverterExcep
 import com.orange.clara.pivotaltrackermirror.exceptions.ConvertException;
 import com.orange.clara.pivotaltrackermirror.job.MirrorJob;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
+import com.orange.clara.pivotaltrackermirror.model.request.MirrorReferenceRequest;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +27,7 @@ import java.net.URI;
  * Date: 15/07/2016
  */
 @RestController
-@RequestMapping("/api/mirrorReference")
+@RequestMapping("/api/mirrorReferences")
 public class MirrorReferenceController extends AbstractController {
 
     @Autowired
@@ -37,12 +38,14 @@ public class MirrorReferenceController extends AbstractController {
     private Integer refreshMirrorMinutes;
 
     @RequestMapping(method = RequestMethod.POST, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> register(@RequestBody MirrorReference mirrorReference) throws ConvertException, CannotFindConverterException, SchedulerException {
+    public ResponseEntity<?> register(@RequestBody MirrorReferenceRequest mirrorReferenceRequest) throws ConvertException, CannotFindConverterException, SchedulerException {
+        MirrorReference mirrorReference = mirrorReferenceRequest.toMirrorReference();
         mirrorReference.setUpdatedAt(null);
         mirrorReference = this.mirrorReferenceRepo.save(mirrorReference);
         JobDetail job = JobBuilder.newJob(MirrorJob.class)
                 .withIdentity(MirrorJob.JOB_KEY_NAME + mirrorReference.getId(), MirrorJob.JOB_KEY_GROUP)
                 .usingJobData(MirrorJob.JOB_MIRROR_REFERENCE_ID_KEY, String.valueOf(mirrorReference.getId()))
+                .usingJobData(MirrorJob.JOB_MIRROR_TOKEN_KEY, mirrorReferenceRequest.getToken())
                 .build();
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity(MirrorJob.TRIGGER_KEY_NAME + mirrorReference.getId(), MirrorJob.TRIGGER_KEY_GROUP)

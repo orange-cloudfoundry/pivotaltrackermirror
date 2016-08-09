@@ -11,5 +11,14 @@ package com.orange.clara.pivotaltrackermirror.model;
  * Date: 15/07/2016
  */
 public enum ConverterType {
-    GITHUB
+    GITHUB(true);
+    private boolean isUseToken;
+
+    ConverterType(boolean isUseToken) {
+        this.isUseToken = isUseToken;
+    }
+
+    public boolean isUseToken() {
+        return isUseToken;
+    }
 }

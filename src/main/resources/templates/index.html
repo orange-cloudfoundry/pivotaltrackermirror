@@ -56,7 +56,15 @@
                         <td><a th:href="${mirrorReference.targetLink}"
                                th:text="${mirrorReference.target}"></a></td>
                         <td>
-                            <span th:text="${mirrorReference.type}"></span>
+                            <span th:if="${mirrorReference.type != T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                                  th:text="${mirrorReference.type}"></span>
+
+                            <span th:if="${mirrorReference.type == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                                  th:text="${mirrorReference.type}"></span>
+                            <i th:if="${mirrorReference.type == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                               class="tiny material-icons info-tooltip tooltipped blue-text" data-position="bottom"
+                               data-delay="50"
+                               th:attr="data-tooltip=${mirrorReference.getLastJobErrorMessage()}">info_outline</i>
                         </td>
                         <td>
                             <span th:if="${mirrorReference.updatedAt != null}"
@@ -66,8 +74,8 @@
                             <span th:text="${mirrorReference.jobStatus.name().toLowerCase().replace('_', ' ')}"></span>
                         </td>
                         <td>
-                            <a class="btn waves-effect tooltipped btn-floating waves-light red delete-mirror"
-                               th:href="${'/api/mirrorReference/'+ mirrorReference.id}"><i
+                            <a class="btn waves-effect btn-floating waves-light red delete-mirror"
+                               th:href="${'/api/mirrorReferences/'+ mirrorReference.id}"><i
                                     class="material-icons">delete</i></a>
                         </td>
                     </tr>
@@ -79,7 +87,7 @@
     <div id="errorModal" class="modal">
         <div class="modal-content">
             <h4>Modal Header</h4>
-            <p>A bunch of text</p>
+            <div class="error-message"><p>A bunch of text</p></div>
         </div>
         <div class="modal-footer">
             <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
@@ -111,6 +119,15 @@
                                         th:text="${converterType.name().toLowerCase().replace('_',' ')}"></option>
                             </select>
                             <label for="converter">Converter</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <input placeholder="e.g: github token" id="token" type="text"
+                                   class="validate blue-cf-lighten-1"/>
+                            <label for="token">Converter Token</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
                         </div>
                         <div class="input-field col s6">
                             <button class="btn waves-effect waves-light blue-cf" type="submit" name="action">Mirror

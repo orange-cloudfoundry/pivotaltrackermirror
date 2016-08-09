@@ -8,20 +8,21 @@
 
             $.ajax({
                 dataType: "json",
-                url: "/api/mirrorReference",
+                url: "/api/mirrorReferences",
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify({
                     "pivotalTrackerProjectId": pivotalId,
                     "target": $('#createMirrorModal #target').val(),
                     "type": $('#createMirrorModal #converter').val(),
+                    "token": $('#createMirrorModal #token').val(),
                     "secret": "nothing"
                 })
             }).done(function () {
                 location.reload();
             }).fail(function (data) {
-                $('#errorModal h4').html("Error " + data.status);
-                $('#errorModal p').html(data.message);
+                $('#errorModal h4').html("Error " + data.responseJSON.status);
+                $('#errorModal .error-message').html("<p>" + data.responseJSON.message + "</p>");
                 $('#errorModal').openModal();
             });
             return false;
@@ -35,8 +36,8 @@
             }).done(function () {
                 location.reload();
             }).fail(function (data) {
-                $('#errorModal h4').html("Error " + data.status);
-                $('#errorModal .modal-content p').html(data.message);
+                $('#errorModal h4').html("Error " + data.responseJSON.status);
+                $('#errorModal .error-message').html("<p>" + data.responseJSON.message + "</p>");
                 $('#errorModal').openModal();
             });
             return false;
