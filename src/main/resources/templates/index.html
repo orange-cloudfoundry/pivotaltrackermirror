@@ -80,6 +80,12 @@
                             <a class="btn waves-effect btn-floating waves-light red delete-mirror"
                                th:href="${'/api/mirrorReferences/'+ mirrorReference.id}"><i
                                     class="material-icons">delete</i></a>
+                            <a class="btn waves-effect btn-floating waves-light orange delete-mirror"
+                               th:href="${'/api/mirrorReferences/'+ mirrorReference.id + '/force-update'}"><i
+                                    data-position="bottom"
+                                    data-delay="50"
+                                    th:attr="data-tooltip='Force re-update all stories'"
+                                    class="material-icons tooltipped">replay</i></a>
                         </td>
                     </tr>
                     </tbody>

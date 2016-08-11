@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Date;
 
 
 /**
@@ -58,7 +59,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.created(URI.create(appUrl + "/api/task/" + mirrorReference.getId() + "/status")).body(mirrorReference);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.GET, value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> get(@PathVariable Integer id) {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
         if (mirrorReference == null) {
@@ -72,7 +73,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.ok(Lists.newArrayList(this.mirrorReferenceRepo.findAll()));
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable Integer id) throws SchedulerException {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
         if (mirrorReference == null) {
@@ -81,5 +82,18 @@ public class MirrorReferenceController extends AbstractController {
         scheduler.deleteJob(new JobKey(MirrorJob.JOB_KEY_NAME + mirrorReference.getId(), MirrorJob.JOB_KEY_GROUP));
         this.mirrorReferenceRepo.delete(mirrorReference);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id:[0-9]*}/force-update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> forceUpdate(@PathVariable Integer id) throws SchedulerException {
+        MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
+        if (mirrorReference == null) {
+            return ResponseEntity.notFound().build();
+        }
+        mirrorReference.setUpdatedAt(new Date(0L));
+        this.mirrorReferenceRepo.save(mirrorReference);
+        JobKey jobKey = new JobKey(MirrorJob.TRIGGER_KEY_NAME + id, MirrorJob.TRIGGER_KEY_GROUP);
+        scheduler.triggerJob(jobKey);
+        return ResponseEntity.accepted().build();
     }
 }
