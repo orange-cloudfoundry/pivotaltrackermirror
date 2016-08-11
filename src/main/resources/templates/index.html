@@ -52,26 +52,29 @@
                             <span th:text="${mirrorReference.id}"></span></td>
                         <td>
                             <a th:href="${'https://www.pivotaltracker.com/n/projects/'+ mirrorReference.pivotalTrackerProjectId}"
-                               th:text="${mirrorReference.pivotalTrackerProjectId}"></a></td>
-                        <td><a th:href="${mirrorReference.targetLink}"
-                               th:text="${mirrorReference.target}"></a></td>
+                               th:text="${mirrorReference.pivotalTrackerProjectId}"></a>
+                        </td>
                         <td>
-                            <span th:if="${mirrorReference.type != T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
-                                  th:text="${mirrorReference.type}"></span>
-
-                            <span th:if="${mirrorReference.type == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
-                                  th:text="${mirrorReference.type}"></span>
-                            <i th:if="${mirrorReference.type == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
-                               class="tiny material-icons info-tooltip tooltipped blue-text" data-position="bottom"
-                               data-delay="50"
-                               th:attr="data-tooltip=${mirrorReference.getLastJobErrorMessage()}">info_outline</i>
+                            <a th:href="${mirrorReference.targetLink}"
+                               th:text="${mirrorReference.target}"></a>
+                        </td>
+                        <td>
+                            <span th:text="${mirrorReference.type.name().toLowerCase().replace('_', ' ')}"></span>
                         </td>
                         <td>
                             <span th:if="${mirrorReference.updatedAt != null}"
                                   th:text="${T(org.apache.commons.lang3.time.DateFormatUtils).format(mirrorReference.updatedAt, 'yyyy-MM-dd HH:mm', timeZone)}">date</span>
                         </td>
                         <td>
-                            <span th:text="${mirrorReference.jobStatus.name().toLowerCase().replace('_', ' ')}"></span>
+                            <span th:if="${mirrorReference.lastJobStatus != T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                                  th:text="${mirrorReference.lastJobStatus.name().toLowerCase().replace('_', ' ')}"></span>
+
+                            <span th:if="${mirrorReference.lastJobStatus == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                                  th:text="${mirrorReference.lastJobStatus.name().toLowerCase().replace('_', ' ')}"></span>
+                            <i th:if="${mirrorReference.lastJobStatus == T(com.orange.clara.pivotaltrackermirror.model.JobStatus).ERROR}"
+                               class="tiny material-icons info-tooltip tooltipped blue-text" data-position="bottom"
+                               data-delay="50"
+                               th:attr="data-tooltip=${mirrorReference.getLastJobErrorMessage()}">info_outline</i>
                         </td>
                         <td>
                             <a class="btn waves-effect btn-floating waves-light red delete-mirror"
