@@ -136,10 +136,10 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TRIGGER_NAME" type="NVARCHAR(150)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="TRIGGER_GROUP" type="NVARCHAR(150)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="REPEAT_COUNT" type="BIGINT">
                 <constraints nullable="false"/>
