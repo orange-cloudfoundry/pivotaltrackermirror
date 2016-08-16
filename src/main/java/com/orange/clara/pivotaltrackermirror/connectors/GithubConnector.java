@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -131,7 +132,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
         }
         List<Label> labels = Lists.newArrayList();
         labels.add(this.createLabelForStatus(story.currentState));
-        labels.add(new Label().setName(story.storyType.name()));
+        labels.add(new Label().setName(story.storyType.name()).setColor("ededed"));
         if (story.getLabels() != null) {
             labels.addAll(this.convertLabel(story.getLabels()));
         }
@@ -174,7 +175,8 @@ public class GithubConnector implements Connector<Issue, Comment> {
 
     protected void waitSend() throws ConnectorException {
         try {
-            Thread.sleep(2000L);
+            Random randomGenerator = new Random();
+            Thread.sleep(2000L + (long) (randomGenerator.nextInt(6)) * 1000L);
         } catch (InterruptedException e) {
             throw new ConnectorException(e.getMessage(), e);
         }
@@ -207,6 +209,9 @@ public class GithubConnector implements Connector<Issue, Comment> {
                 break;
             case unstarted:
                 label.setColor("e0c85e");
+                break;
+            default:
+                label.setColor("ededed");
                 break;
         }
         return label;
@@ -281,6 +286,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
         for (onespot.pivotal.api.resources.Label labelPivotal : labelsPivotal) {
             Label labelGithub = new Label();
             labelGithub.setName(labelPivotal.name);
+            labelGithub.setColor("ededed");
             labels.add(labelGithub);
         }
         return labels;

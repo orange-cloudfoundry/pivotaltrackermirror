@@ -92,7 +92,7 @@ public class MirrorReferenceController extends AbstractController {
         }
         mirrorReference.setUpdatedAt(new Date(0L));
         this.mirrorReferenceRepo.save(mirrorReference);
-        JobKey jobKey = new JobKey(MirrorJob.TRIGGER_KEY_NAME + id, MirrorJob.TRIGGER_KEY_GROUP);
+        JobKey jobKey = new JobKey(MirrorJob.JOB_KEY_NAME + id, MirrorJob.JOB_KEY_GROUP);
         scheduler.triggerJob(jobKey);
         return ResponseEntity.accepted().build();
     }

@@ -42,5 +42,20 @@
             });
             return false;
         });
+        $('a.force-update').click(function () {
+            $.ajax({
+                dataType: "json",
+                url: $(this).attr('href'),
+                method: "GET",
+                contentType: "application/json"
+            }).done(function () {
+                location.reload();
+            }).fail(function (data) {
+                $('#errorModal h4').html("Error " + data.responseJSON.status);
+                $('#errorModal .error-message').html("<p>" + data.responseJSON.message + "</p>");
+                $('#errorModal').openModal();
+            });
+            return false;
+        });
     }); // end of document ready
 })(jQuery); // end of jQuery name space
