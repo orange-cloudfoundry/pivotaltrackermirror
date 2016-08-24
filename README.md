@@ -36,7 +36,7 @@ Go to url of the app deployed on cloud foundry or http://localhost:8080 for loca
 
 ![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
 
-Then regularly, PT stories are mirrored into GH issues. See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
+Then regularly, PT stories (in the non-accepted state) are mirrored into GH issues. See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
 
 List of mirrored stories
 
