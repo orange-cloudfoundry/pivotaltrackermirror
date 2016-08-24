@@ -313,7 +313,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
 
         storyBody.add("---");
 
-        storyBody.add(String.format("\nMirror: [story %s](%s) submitted on %s", story.id, story.getUrl(), dateFormat.format(Date.from(story.getCreatedAt()))));
+        storyBody.add(String.format("\nMirrors: [story %s](%s) submitted on %s", story.id, story.getUrl(), dateFormat.format(Date.from(story.getCreatedAt()))));
         if (story.requester != null && story.requester.name != null) {
             storyBody.add("- **Requester**: " + story.requester.name);
         }
