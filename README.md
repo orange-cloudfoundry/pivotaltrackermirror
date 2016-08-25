@@ -66,3 +66,7 @@ This project originated as a POC to help the Cf community track progress of the 
 Currently there is no way for non project members to subscribe to PT story updates, see related [cf-dev thread](http://cf-dev.70369.x6.nabble.com/cf-dev-FW-issue-tracker-permissions-tt2763.html#a5014) or https://github.com/cloudfoundry/cli/issues/560#issuecomment-156846815 where CLI team PM tried to add non-team members to provide ways to check story status), or to comment on stories.
 
 This project is generally trying to make it easier for the cloudfoundry community to interact with cloud foundry core contributors and suggest product ideas or comment current progresses/decisions/investigations.
+
+## Roadmap and future evolutions
+
+Feedback and contributions are welcome. See issues for current ideas of future improvement. We use milestones for tracking  relative priority, have a look at https://huboard.com/orange-cloudfoundry/pivotaltrackermirror for a visual display.
