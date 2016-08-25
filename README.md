@@ -69,4 +69,4 @@ This project is generally trying to make it easier for the cloudfoundry communit
 
 ## Roadmap and future evolutions
 
-Feedback and contributions are welcome. See issues for current ideas of future improvement. We use milestones for tracking  relative priority, have a look at https://huboard.com/orange-cloudfoundry/pivotaltrackermirror for a visual display.
+Feedback and contributions are welcome. See issues for current ideas of future improvement. We use milestones for tracking  relative priority, have a look at https://huboard.com/orange-cloudfoundry/pivotaltrackermirror#/milestones for a visual display.
