@@ -51,7 +51,13 @@ A sample mirrored story with comments
 
 Note that screenshots may be out of date w.r.t. latest code improvements.
 
+There are additional REST endpoints that can provide additional details beyond what the UI displays, e.g. 
 
+```
+curl -k -u login:pwd https://trackerapp.org/api/tasks/15
+
+{"jobStatus":"COMPLETE","dateStartTime":"2016-08-12T13:09Z","nextFireTime":"2016-08-25T15:09Z","previousFireTime":"2016-08-25T13:09Z"}
+```
 
 ## Project history and relations to cloud foundry community
 
