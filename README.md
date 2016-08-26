@@ -38,12 +38,16 @@ Go to url of the app deployed on cloud foundry or http://localhost:8080 for loca
 
 In the "Converter token", specify a [github personall access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this toke needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
 
-Then regularly, PT stories (in the non-accepted state) are mirrored into GH issues. See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
+
+Then a regular job mirrors PT stories (in the non-accepted state) into GH issues.
+![screenshot247](https://cloud.githubusercontent.com/assets/4748380/17997053/7cbee95c-6b6c-11e6-94a6-2199f626a894.png)
+
+
+See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
 
 List of mirrored stories
 
 ![screenshot212](https://cloud.githubusercontent.com/assets/4748380/17189865/c546f448-5443-11e6-8a14-12f19eefc592.png)
-
 
 A sample mirrored story with comments
 
@@ -51,6 +55,7 @@ A sample mirrored story with comments
 
 Note that screenshots may be out of date w.r.t. latest code improvements.
 
+When upgrading pivotaltrackermirror (e.g. improving mapping markup), you may request to reimport all mirrored stories in the UI.
 There are additional REST endpoints that can provide additional details beyond what the UI displays, e.g. 
 
 ```
