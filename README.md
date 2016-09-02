@@ -38,12 +38,16 @@ Go to url of the app deployed on cloud foundry or http://localhost:8080 for loca
 
 In the "Converter token", specify a [github personall access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this toke needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
 
-Then regularly, PT stories (in the non-accepted state) are mirrored into GH issues. See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
+
+Then a regular job mirrors PT stories (in the non-accepted state) into GH issues.
+![screenshot247](https://cloud.githubusercontent.com/assets/4748380/17997053/7cbee95c-6b6c-11e6-94a6-2199f626a894.png)
+
+
+See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
 
 List of mirrored stories
 
 ![screenshot212](https://cloud.githubusercontent.com/assets/4748380/17189865/c546f448-5443-11e6-8a14-12f19eefc592.png)
-
 
 A sample mirrored story with comments
 
@@ -51,7 +55,14 @@ A sample mirrored story with comments
 
 Note that screenshots may be out of date w.r.t. latest code improvements.
 
+When upgrading pivotaltrackermirror (e.g. improving mapping markup), you may request to reimport all mirrored stories in the UI.
+There are additional REST endpoints that can provide additional details beyond what the UI displays, e.g. 
 
+```
+curl -k -u login:pwd https://trackerapp.org/api/tasks/15
+
+{"jobStatus":"COMPLETE","dateStartTime":"2016-08-12T13:09Z","nextFireTime":"2016-08-25T15:09Z","previousFireTime":"2016-08-25T13:09Z"}
+```
 
 ## Project history and relations to cloud foundry community
 
@@ -60,3 +71,7 @@ This project originated as a POC to help the Cf community track progress of the 
 Currently there is no way for non project members to subscribe to PT story updates, see related [cf-dev thread](http://cf-dev.70369.x6.nabble.com/cf-dev-FW-issue-tracker-permissions-tt2763.html#a5014) or https://github.com/cloudfoundry/cli/issues/560#issuecomment-156846815 where CLI team PM tried to add non-team members to provide ways to check story status), or to comment on stories.
 
 This project is generally trying to make it easier for the cloudfoundry community to interact with cloud foundry core contributors and suggest product ideas or comment current progresses/decisions/investigations.
+
+## Roadmap and future evolutions
+
+Feedback and contributions are welcome. See issues for current ideas of future improvement. We use milestones for tracking  relative priority, have a look at https://huboard.com/orange-cloudfoundry/pivotaltrackermirror#/milestones for a visual display.
