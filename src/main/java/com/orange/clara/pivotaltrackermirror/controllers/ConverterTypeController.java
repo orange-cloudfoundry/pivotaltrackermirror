@@ -26,7 +26,7 @@ import java.util.List;
 @RequestMapping("/api/converterTypes")
 public class ConverterTypeController {
 
-    @ApiOperation("Get the list of all available converter in the app")
+    @ApiOperation(value = "Get the list of all available converter in the app", response = ConverterTypeResponse.class, responseContainer = "List")
     @RequestMapping(method = RequestMethod.GET, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll() {
         List<ConverterTypeResponse> converterTypeResponses = Lists.newArrayList();

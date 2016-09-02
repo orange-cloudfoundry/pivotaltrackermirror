@@ -39,7 +39,7 @@ public class MirrorReferenceController extends AbstractController {
     @Qualifier("refreshMirrorMinutes")
     private Integer refreshMirrorMinutes;
 
-    @ApiOperation("Register a mirror reference")
+    @ApiOperation(value = "Register a mirror reference", response = MirrorReference.class)
     @RequestMapping(method = RequestMethod.POST, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody MirrorReferenceRequest mirrorReferenceRequest) throws ConvertException, CannotFindConverterException, SchedulerException {
         MirrorReference mirrorReference = mirrorReferenceRequest.toMirrorReference();
@@ -61,7 +61,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.created(URI.create(appUrl + "/api/task/" + mirrorReference.getId() + "/status")).body(mirrorReference);
     }
 
-    @ApiOperation("Get a specific mirror referenced by its id")
+    @ApiOperation(value = "Get a specific mirror referenced by its id", response = MirrorReference.class)
     @RequestMapping(method = RequestMethod.GET, value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> get(@PathVariable Integer id) {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
@@ -71,7 +71,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.ok(mirrorReference);
     }
 
-    @ApiOperation("Retrieve all mirrors registered")
+    @ApiOperation(value = "Retrieve all mirrors registered", response = MirrorReference.class, responseContainer = "List")
     @RequestMapping(method = RequestMethod.GET, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(Lists.newArrayList(this.mirrorReferenceRepo.findAll()));

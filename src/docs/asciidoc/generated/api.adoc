@@ -53,7 +53,7 @@ GET /api/converterTypes
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|< <<_convertertyperesponse,ConverterTypeResponse>> > array
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
 |*404*|Not Found|No Content
@@ -88,7 +88,7 @@ POST /api/mirrorReferences
 |===
 |Type|Name|Description|Schema|Default
 |*Body*|*mirrorReferenceRequest* +
-_required_|mirrorReferenceRequest|<<_mirrorreferencerequest,MirrorReferenceRequest>>|
+_required_|mirrorReferenceRequest|<<_mirror_reference_description,Mirror Reference description>>|
 |===
 
 
@@ -97,7 +97,7 @@ _required_|mirrorReferenceRequest|<<_mirrorreferencerequest,MirrorReferenceReque
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|<<_mirrorreference,MirrorReference>>
 |*201*|Created|No Content
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
@@ -132,7 +132,7 @@ GET /api/mirrorReferences
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|< <<_mirrorreference,MirrorReference>> > array
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
 |*404*|Not Found|No Content
@@ -176,7 +176,7 @@ _required_|id|integer(int32)|
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|<<_mirrorreference,MirrorReference>>
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
 |*404*|Not Found|No Content
@@ -308,7 +308,7 @@ _required_|id|integer(int32)|
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|<<_triggerresponse,TriggerResponse>>
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
 |*404*|Not Found|No Content
@@ -352,7 +352,7 @@ _required_|id|integer(int32)|
 [options="header", cols=".^2,.^14,.^4"]
 |===
 |HTTP Code|Description|Schema
-|*200*|OK|object
+|*200*|OK|enum (NONE, NORMAL, PAUSED, COMPLETE, ERROR, BLOCKED, SCHEDULED, RUNNING)
 |*401*|Unauthorized|No Content
 |*403*|Forbidden|No Content
 |*404*|Not Found|No Content
@@ -379,8 +379,38 @@ _required_|id|integer(int32)|
 [[_definitions]]
 == Definitions
 
-[[_mirrorreferencerequest]]
-=== MirrorReferenceRequest
+[[_convertertyperesponse]]
+=== ConverterTypeResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*isUseToken* +
+_optional_||boolean
+|*name* +
+_optional_||string
+|===
+
+
+[[_mirror_reference_description]]
+=== Mirror Reference description
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*pivotalTrackerProjectId* +
+_required_|Pivotal tracker project id|integer(int32)
+|*target* +
+_required_|Converter target (e.g.: a github repo)|string
+|*token* +
+_required_|Converter token (e.g.: github token)|string
+|*type* +
+_required_|Converter to use (e.g.: github)|enum (GITHUB)
+|===
+
+
+[[_mirrorreference]]
+=== MirrorReference
 
 [options="header", cols=".^3,.^11,.^4"]
 |===
@@ -397,11 +427,26 @@ _optional_||integer(int32)
 _optional_||string
 |*target* +
 _optional_||string
-|*token* +
-_optional_||string
 |*type* +
 _optional_||enum (GITHUB)
 |*updatedAt* +
+_optional_||string(date-time)
+|===
+
+
+[[_triggerresponse]]
+=== TriggerResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*dateStartTime* +
+_optional_||string(date-time)
+|*jobStatus* +
+_optional_||enum (NONE, NORMAL, PAUSED, COMPLETE, ERROR, BLOCKED, SCHEDULED, RUNNING)
+|*nextFireTime* +
+_optional_||string(date-time)
+|*previousFireTime* +
 _optional_||string(date-time)
 |===
 
