@@ -10,4 +10,5 @@ env:
   pivotaltracker_token: replacewithyourtoken
   spring_profiles_active: cloud
   refresh_mirror_after_minutes: "120"
+  story_filters: CVE
 disk_quota: 1024M

@@ -11,6 +11,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -32,6 +33,9 @@ public class AppConfig {
 
     @Value("${refresh.mirror.after.minutes:120}")
     private Integer refreshMirrorMinutes;
+
+    @Value("#{'${story.filters:CVE}'.split(',')}")
+    private List<String> storyFilters;
 
     @Profile("!dev")
     @Bean(name = "debugTraceController")
@@ -55,6 +59,11 @@ public class AppConfig {
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public List<String> storyFilters() {
+        return storyFilters;
     }
 
     @Bean

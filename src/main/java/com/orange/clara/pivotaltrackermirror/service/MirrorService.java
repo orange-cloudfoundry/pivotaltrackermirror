@@ -13,6 +13,7 @@ import onespot.pivotal.api.resources.Story;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +36,9 @@ public class MirrorService {
 
     @Autowired
     private PivotalTrackerConverterFactory converterFactory;
+
+    @Value("#{storyFilters}")
+    private List<String> storyFilters;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -60,6 +64,8 @@ public class MirrorService {
         } else {
             stories = projectDAO.stories().updatedAfter(mirrorReference.getUpdatedAt().toInstant()).get();
         }
+        stories = filteringStories(stories);
+
         logger.debug("Finished getting stories for project {}.", mirrorReference.getPivotalTrackerProjectId());
         List<StoryCompleteReference> storyCompleteReferences = Lists.newArrayList();
         for (Story story : stories) {
@@ -70,5 +76,26 @@ public class MirrorService {
                     ));
         }
         converter.convert(mirrorReference, storyCompleteReferences, token);
+    }
+
+    private List<Story> filteringStories(List<Story> stories) {
+        List<Story> filteredStories = Lists.newArrayList();
+        for (Story story : stories) {
+            if (this.isStorySkipped(story)) {
+                continue;
+            }
+            filteredStories.add(story);
+        }
+        return filteredStories;
+    }
+
+    private boolean isStorySkipped(Story story) {
+        for (String filter : this.storyFilters) {
+            if (story.getName().toLowerCase().contains(filter.trim().toLowerCase())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
