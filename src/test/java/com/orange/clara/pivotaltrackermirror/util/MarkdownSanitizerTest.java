@@ -137,8 +137,7 @@ public class MarkdownSanitizerTest {
     @Test
     public void sanitizeMention() throws Exception {
         String text = "hey my name is \n @john my github account is [@john](https://github.com/john)\n@titi";
-        String expectedText = "hey my name is \n " + MarkdownSanitizer.PT_USER_ICON + "john my github account is "
-                + MarkdownSanitizer.GITHUB_USER_ICON + "[@john](https://github.com/john)\n" + MarkdownSanitizer.PT_USER_ICON + "titi";
+        String expectedText = "hey my name is \n `@pt:john` my github account is `@gh:john`\n`@pt:titi`";
         assertThat(MarkdownSanitizer.sanitizeMention(text)).isEqualTo(expectedText);
     }
 }
