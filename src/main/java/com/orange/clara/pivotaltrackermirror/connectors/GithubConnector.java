@@ -70,15 +70,13 @@ public class GithubConnector implements Connector<Issue, Comment> {
             this.createLabelsOnGithub(repositoryId, issue.getLabels());
             if (mirrorReference.getUpdatedAt() == null) {
                 logger.debug("Posting new issue on github with title '{}'.", issue.getTitle());
-                this.waitSend();
-                return this.issueService.createIssue(repositoryId, issue);
+                return createIssue(repositoryId, issue);
             }
             Integer storyId = this.getStoryIdFromIssueTitle(issue);
             Issue existingIssue = this.findIssue(repositoryId, storyId);
             if (existingIssue == null) {
                 logger.debug("Posting new issue on github with title '{}' because no existing was found.", issue.getTitle());
-                this.waitSend();
-                return this.issueService.createIssue(repositoryId, issue);
+                return createIssue(repositoryId, issue);
             }
             issue.setNumber(existingIssue.getNumber());
             if (issuesEquals(existingIssue, issue)) {
@@ -162,6 +160,17 @@ public class GithubConnector implements Connector<Issue, Comment> {
         this.labelService = new LabelService(client);
     }
 
+    private Issue createIssue(RepositoryId repositoryId, Issue originalIssue) throws IOException, ConnectorException {
+        this.waitSend();
+        Issue issue = this.issueService.createIssue(repositoryId, originalIssue);
+        // github api doesnt allow to set the issue state during creation
+        if (originalIssue.getState().equals("closed")) {
+            this.waitSend();
+            issue = this.issueService.editIssue(repositoryId, originalIssue);
+        }
+        return issue;
+    }
+
     private void createLabelsOnGithub(RepositoryId repositoryId, List<Label> labels) throws IOException {
         List<Label> existingLabels = this.labelService.getLabels(repositoryId);
         for (Label label : labels) {
@@ -217,7 +226,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
         return label;
     }
 
-    public boolean issuesEquals(Issue issue1, Issue issue2) {
+    private boolean issuesEquals(Issue issue1, Issue issue2) {
 
         return issue1.getLabels().equals(issue2.getLabels())
                 && issue1.getTitle().equals(issue2.getTitle())
