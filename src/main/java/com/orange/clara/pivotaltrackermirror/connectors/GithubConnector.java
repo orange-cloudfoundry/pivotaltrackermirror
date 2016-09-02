@@ -237,7 +237,7 @@ public class GithubConnector implements Connector<Issue, Comment> {
 
     protected int getCommentIdFromCommentGithub(Comment comment) {
         String[] bodySpliced = comment.getBody().split("\n");
-        String idString = bodySpliced[bodySpliced.length - 1];
+        String idString = bodySpliced[bodySpliced.length - 2];
         Pattern p = Pattern.compile(COMMENT_ID_PATTERN);
         Matcher matcher = p.matcher(idString);
         if (!matcher.find()) {
