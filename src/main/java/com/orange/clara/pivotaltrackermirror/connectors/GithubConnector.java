@@ -317,7 +317,9 @@ public class GithubConnector implements Connector<Issue, Comment> {
     protected String createBodyStory(Story story) {
         List<String> storyBody = Lists.newArrayList();
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_SHORT_PATTERN);
-
+        if (story.description == null) {
+            story.description = "";
+        }
         storyBody.add(MarkdownSanitizer.sanitize(story.description) + "\n");
 
         storyBody.add("---");
