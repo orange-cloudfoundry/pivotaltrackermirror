@@ -75,7 +75,7 @@
         <dependency>
             <groupId>com.github.ArthurHlt</groupId>
             <artifactId>pivotaltracker-java-client</artifactId>
-            <version>0.0.20</version>
+            <version>0.0.21</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
