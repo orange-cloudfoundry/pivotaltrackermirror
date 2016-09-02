@@ -5,7 +5,7 @@ Mirror a pivotal tracker (PT) project to an another tracker system (only github 
 * Comments in stories are mirrored into github issue comments
 
 
-# Why mirroring a pivotal tracker project ?
+## Why mirroring a pivotal tracker project ?
 
 Mirroring a PT projet stories into github issues provides the following benefits:
 * leverage the [watching notifications](https://help.github.com/articles/about-notifications/#types-of-notifications) github feature to track progress on public pivotal trackers which lacks such self-service update notification feature
