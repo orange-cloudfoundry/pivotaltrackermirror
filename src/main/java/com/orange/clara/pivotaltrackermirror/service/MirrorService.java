@@ -9,6 +9,7 @@ import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
 import com.orange.clara.pivotaltrackermirror.model.StoryCompleteReference;
 import onespot.pivotal.api.PivotalTracker;
 import onespot.pivotal.api.dao.ProjectDAO;
+import onespot.pivotal.api.resources.Label;
 import onespot.pivotal.api.resources.Story;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +38,8 @@ public class MirrorService {
     @Autowired
     private PivotalTrackerConverterFactory converterFactory;
 
-    @Value("#{storyFilters}")
-    private List<String> storyFilters;
+    @Value("#{storyFilteredLabels}")
+    private List<String> storyFilteredLabels;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -90,12 +91,13 @@ public class MirrorService {
     }
 
     private boolean isStorySkipped(Story story) {
-        for (String filter : this.storyFilters) {
-            if (story.getName().toLowerCase().contains(filter.trim().toLowerCase())) {
-                return true;
+        for (Label label : story.labels) {
+            for (String filter : this.storyFilteredLabels) {
+                if (label.name.toLowerCase().equals(filter.trim().toLowerCase())) {
+                    return true;
+                }
             }
         }
-
         return false;
     }
 }

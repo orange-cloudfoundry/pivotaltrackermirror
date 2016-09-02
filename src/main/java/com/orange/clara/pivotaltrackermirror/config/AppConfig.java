@@ -34,8 +34,8 @@ public class AppConfig {
     @Value("${refresh.mirror.after.minutes:120}")
     private Integer refreshMirrorMinutes;
 
-    @Value("#{'${story.filters:CVE}'.split(',')}")
-    private List<String> storyFilters;
+    @Value("#{'${story.filtered.labels:CVE}'.split(',')}")
+    private List<String> storyFilteredLabels;
 
     @Profile("!dev")
     @Bean(name = "debugTraceController")
@@ -62,8 +62,8 @@ public class AppConfig {
     }
 
     @Bean
-    public List<String> storyFilters() {
-        return storyFilters;
+    public List<String> storyFilteredLabels() {
+        return storyFilteredLabels;
     }
 
     @Bean
