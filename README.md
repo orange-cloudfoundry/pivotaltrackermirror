@@ -26,17 +26,26 @@ Mirroring a PT projet stories into github issues provides the following benefits
 | ---------------------------- |:------------------:|
 | admin_password               | password           |
 | admin_username               | admin              |
-| github_token                 | *NONE*             |
 | pivotaltracker_token         | *NONE*             |
 | refresh_mirror_after_minutes | 120                |
 
 ## Use it
 
+### From Api
+
+This application provide an api more than a frontend. Developper or user can use this api.
+
+[Click here to see the api documentation](/src/docs/asciidoc/generated/api.adoc)
+
+You can also test this api through [swagger-ui](http://swagger.io/swagger-ui/), to do so, you have to deploy the app and browse to this endpoint `/swagger-ui.html`.
+
+### From small frontend
+
 Go to url of the app deployed on cloud foundry or http://localhost:8080 for local deployments and manage mirrors through the UI:
 
 ![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
 
-In the "Converter token", specify a [github personall access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this toke needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
+In the "Converter token", specify a [github personal access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this toke needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
 
 
 Then a regular job mirrors PT stories (in the non-accepted state) into GH issues.

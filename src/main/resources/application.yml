@@ -4,3 +4,4 @@ spring:
     hibernate:
       ddl-auto: none
 samplejob.frequency: 2000
+springfox.documentation.swagger.v2.path: /swagger/api-docs

@@ -2,6 +2,7 @@ package com.orange.clara.pivotaltrackermirror.controllers;
 
 import com.orange.clara.pivotaltrackermirror.job.MirrorJob;
 import com.orange.clara.pivotaltrackermirror.model.response.TriggerResponse;
+import io.swagger.annotations.ApiOperation;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
 import org.quartz.TriggerKey;
@@ -26,12 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/tasks")
 public class TaskStatusController extends AbstractController {
 
+    @ApiOperation("Get the current status of the job running for a specific mirror")
     @RequestMapping(method = RequestMethod.GET, value = "/{id}/status", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getStatus(@PathVariable Integer id) throws SchedulerException {
         return ResponseEntity.ok(this.getTriggerState(id));
     }
 
-
+    @ApiOperation("Get information of a task which is link to a specific mirror")
     @RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> get(@PathVariable Integer id) throws SchedulerException {
         TriggerKey triggerKey = new TriggerKey(MirrorJob.TRIGGER_KEY_NAME + id, MirrorJob.TRIGGER_KEY_GROUP);

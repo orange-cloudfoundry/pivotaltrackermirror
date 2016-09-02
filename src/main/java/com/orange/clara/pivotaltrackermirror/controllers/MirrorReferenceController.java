@@ -6,6 +6,7 @@ import com.orange.clara.pivotaltrackermirror.exceptions.ConvertException;
 import com.orange.clara.pivotaltrackermirror.job.MirrorJob;
 import com.orange.clara.pivotaltrackermirror.model.MirrorReference;
 import com.orange.clara.pivotaltrackermirror.model.request.MirrorReferenceRequest;
+import io.swagger.annotations.ApiOperation;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +39,7 @@ public class MirrorReferenceController extends AbstractController {
     @Qualifier("refreshMirrorMinutes")
     private Integer refreshMirrorMinutes;
 
+    @ApiOperation("Register a mirror reference")
     @RequestMapping(method = RequestMethod.POST, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> register(@RequestBody MirrorReferenceRequest mirrorReferenceRequest) throws ConvertException, CannotFindConverterException, SchedulerException {
         MirrorReference mirrorReference = mirrorReferenceRequest.toMirrorReference();
@@ -59,6 +61,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.created(URI.create(appUrl + "/api/task/" + mirrorReference.getId() + "/status")).body(mirrorReference);
     }
 
+    @ApiOperation("Get a specific mirror referenced by its id")
     @RequestMapping(method = RequestMethod.GET, value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> get(@PathVariable Integer id) {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
@@ -68,11 +71,13 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.ok(mirrorReference);
     }
 
+    @ApiOperation("Retrieve all mirrors registered")
     @RequestMapping(method = RequestMethod.GET, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(Lists.newArrayList(this.mirrorReferenceRepo.findAll()));
     }
 
+    @ApiOperation("Delete a specific mirror referenced by its id")
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id:[0-9]*}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> delete(@PathVariable Integer id) throws SchedulerException {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);
@@ -84,6 +89,7 @@ public class MirrorReferenceController extends AbstractController {
         return ResponseEntity.noContent().build();
     }
 
+    @ApiOperation("Force the app to refresh all stories inside a specific mirror")
     @RequestMapping(method = RequestMethod.GET, value = "/{id:[0-9]*}/force-update", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> forceUpdate(@PathVariable Integer id) throws SchedulerException {
         MirrorReference mirrorReference = this.mirrorReferenceRepo.findOne(id);

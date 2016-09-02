@@ -3,6 +3,7 @@ package com.orange.clara.pivotaltrackermirror.controllers;
 import com.google.common.collect.Lists;
 import com.orange.clara.pivotaltrackermirror.model.ConverterType;
 import com.orange.clara.pivotaltrackermirror.model.response.ConverterTypeResponse;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import java.util.List;
 @RequestMapping("/api/converterTypes")
 public class ConverterTypeController {
 
+    @ApiOperation("Get the list of all available converter in the app")
     @RequestMapping(method = RequestMethod.GET, value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAll() {
         List<ConverterTypeResponse> converterTypeResponses = Lists.newArrayList();

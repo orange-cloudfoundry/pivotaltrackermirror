@@ -1,0 +1,411 @@
+= Pivotal Tracker Mirror API
+
+
+[[_overview]]
+== Overview
+Pivotal Tracker Mirror API Description
+
+
+=== Version information
+[%hardbreaks]
+_Version_ : 1.0.0
+
+
+=== Contact information
+[%hardbreaks]
+_Contact_ : Arthur Halet
+_Contact Email_ : arthur.halet@orange.com
+
+
+=== License information
+[%hardbreaks]
+_License_ : Apache 2.0
+_License URL_ : http://www.apache.org/licenses/LICENSE-2.0.html
+
+
+=== URI scheme
+[%hardbreaks]
+_Host_ : localhost:8080
+_BasePath_ : /
+
+
+=== Tags
+
+* mirror-reference-controller : Mirror Reference Controller
+* task-status-controller : Task Status Controller
+* converter-type-controller : Converter Type Controller
+
+
+
+
+[[_paths]]
+== Paths
+
+[[_getallusingget]]
+=== Get the list of all available converter in the app
+....
+GET /api/converterTypes
+....
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* converter-type-controller
+
+
+[[_registerusingpost]]
+=== Register a mirror reference
+....
+POST /api/mirrorReferences
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Body*|*mirrorReferenceRequest* +
+_required_|mirrorReferenceRequest|<<_mirrorreferencerequest,MirrorReferenceRequest>>|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*201*|Created|No Content
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* mirror-reference-controller
+
+
+[[_getallusingget_1]]
+=== Retrieve all mirrors registered
+....
+GET /api/mirrorReferences
+....
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* mirror-reference-controller
+
+
+[[_getusingget]]
+=== Get a specific mirror referenced by its id
+....
+GET /api/mirrorReferences/{id}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Path*|*id* +
+_required_|id|integer(int32)|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* mirror-reference-controller
+
+
+[[_deleteusingdelete]]
+=== Delete a specific mirror referenced by its id
+....
+DELETE /api/mirrorReferences/{id}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Path*|*id* +
+_required_|id|integer(int32)|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*204*|No Content|No Content
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* mirror-reference-controller
+
+
+[[_forceupdateusingget]]
+=== Force the app to refresh all stories inside a specific mirror
+....
+GET /api/mirrorReferences/{id}/force-update
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Path*|*id* +
+_required_|id|integer(int32)|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* mirror-reference-controller
+
+
+[[_getusingget_1]]
+=== Get information of a task which is link to a specific mirror
+....
+GET /api/tasks/{id}
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Path*|*id* +
+_required_|id|integer(int32)|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* task-status-controller
+
+
+[[_getstatususingget]]
+=== Get the current status of the job running for a specific mirror
+....
+GET /api/tasks/{id}/status
+....
+
+
+==== Parameters
+
+[options="header", cols=".^2,.^3,.^9,.^4,.^2"]
+|===
+|Type|Name|Description|Schema|Default
+|*Path*|*id* +
+_required_|id|integer(int32)|
+|===
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|object
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* task-status-controller
+
+
+
+
+[[_definitions]]
+== Definitions
+
+[[_mirrorreferencerequest]]
+=== MirrorReferenceRequest
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|*id* +
+_optional_||integer(int32)
+|*lastJobErrorMessage* +
+_optional_||string
+|*lastJobStatus* +
+_optional_||enum (NONE, NORMAL, PAUSED, COMPLETE, ERROR, BLOCKED, SCHEDULED, RUNNING)
+|*pivotalTrackerProjectId* +
+_optional_||integer(int32)
+|*secret* +
+_optional_||string
+|*target* +
+_optional_||string
+|*token* +
+_optional_||string
+|*type* +
+_optional_||enum (GITHUB)
+|*updatedAt* +
+_optional_||string(date-time)
+|===
+
+
+
+
+
