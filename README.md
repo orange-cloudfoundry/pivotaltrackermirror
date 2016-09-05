@@ -28,7 +28,7 @@ Mirroring a PT projet stories into github issues provides the following benefits
 | admin_username               | admin              | mirror UI pwd |
 | pivotaltracker_token         | *NONE*             | used to pull pivotal tracker data | 
 | refresh_mirror_after_minutes | 120                | periodicity of refreshes
-| story_filters                | "CVE"              | exclude some stories assigned some labels (case insensitive)        |
+| story_filtered_labels        | "CVE"              | exclude some stories assigned some labels (case insensitive)        |
 
 ## Use it
 
