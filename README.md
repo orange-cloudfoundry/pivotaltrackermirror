@@ -22,12 +22,13 @@ Mirroring a PT projet stories into github issues provides the following benefits
 
 ### Necessary env vars
 
-| Key                          | Default value      |
-| ---------------------------- |:------------------:|
-| admin_password               | password           |
-| admin_username               | admin              |
-| pivotaltracker_token         | *NONE*             |
-| refresh_mirror_after_minutes | 120                |
+| Key                          | Default value      | Descriptioon       
+| ---------------------------- |:------------------:|:------------------:|
+| admin_password               | password           | mirror UI login    |
+| admin_username               | admin              | mirror UI pwd |
+| pivotaltracker_token         | *NONE*             | used to pull pivotal tracker data | 
+| refresh_mirror_after_minutes | 120                | periodicity of refreshes
+| story_filters                | "CVE"              | exclude some stories assigned some labels (case insensitive)        |
 
 ## Use it
 
