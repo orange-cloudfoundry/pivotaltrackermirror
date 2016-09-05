@@ -286,6 +286,40 @@ _required_|id|integer(int32)|
 * mirror-reference-controller
 
 
+[[_getallusingget_2]]
+=== Get information of all tasks.
+....
+GET /api/tasks/
+....
+
+
+==== Responses
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP Code|Description|Schema
+|*200*|OK|< <<_triggerresponse,TriggerResponse>> > array
+|*401*|Unauthorized|No Content
+|*403*|Forbidden|No Content
+|*404*|Not Found|No Content
+|===
+
+
+==== Consumes
+
+* `application/json`
+
+
+==== Produces
+
+* `application/json`
+
+
+==== Tags
+
+* task-status-controller
+
+
 [[_getusingget_1]]
 === Get information of a task which is link to a specific mirror
 ....
@@ -444,6 +478,8 @@ _optional_||string(date-time)
 _optional_||string(date-time)
 |*jobStatus* +
 _optional_||enum (NONE, NORMAL, PAUSED, COMPLETE, ERROR, BLOCKED, SCHEDULED, RUNNING)
+|*mirrorReferenceId* +
+_optional_||integer(int32)
 |*nextFireTime* +
 _optional_||string(date-time)
 |*previousFireTime* +

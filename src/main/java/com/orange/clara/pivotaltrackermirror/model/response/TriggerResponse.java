@@ -25,11 +25,14 @@ public class TriggerResponse {
 
     private Date previousFireTime;
 
-    public TriggerResponse(Trigger trigger, JobStatus jobStatus) {
+    private Integer mirrorReferenceId;
+
+    public TriggerResponse(Trigger trigger, JobStatus jobStatus, Integer mirrorReferenceId) {
         this.dateStartTime = trigger.getStartTime();
         this.nextFireTime = trigger.getNextFireTime();
         this.previousFireTime = trigger.getPreviousFireTime();
         this.jobStatus = jobStatus;
+        this.mirrorReferenceId = mirrorReferenceId;
     }
 
 
@@ -63,5 +66,13 @@ public class TriggerResponse {
 
     public void setPreviousFireTime(Date previousFireTime) {
         this.previousFireTime = previousFireTime;
+    }
+
+    public Integer getMirrorReferenceId() {
+        return mirrorReferenceId;
+    }
+
+    public void setMirrorReferenceId(Integer mirrorReferenceId) {
+        this.mirrorReferenceId = mirrorReferenceId;
     }
 }
