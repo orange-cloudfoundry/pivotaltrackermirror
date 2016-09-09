@@ -66,7 +66,7 @@ A sample mirrored story with comments
 Note that screenshots may be out of date w.r.t. latest code improvements.
 
 When upgrading pivotaltrackermirror (e.g. improving mapping markup), you may request to reimport all mirrored stories in the UI.
-There are additional REST endpoints that can provide additional details beyond what the UI displays, e.g. 
+There are additional [REST endpoints](src/docs/asciidoc/generated/api.adoc) that can provide additional details beyond what the UI displays, e.g. 
 
 ```
 curl -k -u login:pwd https://trackerapp.org/api/tasks/15
