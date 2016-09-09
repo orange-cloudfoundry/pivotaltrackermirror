@@ -22,12 +22,13 @@ Mirroring a PT projet stories into github issues provides the following benefits
 
 ### Necessary env vars
 
-| Key                          | Default value      |
-| ---------------------------- |:------------------:|
-| admin_password               | password           |
-| admin_username               | admin              |
-| pivotaltracker_token         | *NONE*             |
-| refresh_mirror_after_minutes | 120                |
+| Key                          | Default value      | Description       
+| ---------------------------- |:------------------:|:------------------:|
+| admin_password               | password           | mirror UI login    |
+| admin_username               | admin              | mirror UI pwd |
+| pivotaltracker_token         | *NONE*             | used to pull pivotal tracker data | 
+| refresh_mirror_after_minutes | 120                | periodicity of refreshes
+| story_filtered_labels        | "CVE"              | exclude some stories assigned some labels (comma-separated, case insensitive)        |
 
 ## Use it
 
@@ -45,14 +46,14 @@ Go to url of the app deployed on cloud foundry or http://localhost:8080 for loca
 
 ![screenshot210](https://cloud.githubusercontent.com/assets/4748380/17184566/3d044c22-542d-11e6-90c7-0863a7cab0d7.png)
 
-In the "Converter token", specify a [github personal access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this toke needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
+In the "Converter token", specify a [github personal access token](https://github.com/blog/1509-personal-api-tokens) with the  ``repo Full control of private repositories`` scope. The account associated to this token needs owner permission on the target github repo, in order for the trackermirror to set up issue labels.
 
 
 Then a regular job mirrors PT stories (in the non-accepted state) into GH issues.
 ![screenshot247](https://cloud.githubusercontent.com/assets/4748380/17997053/7cbee95c-6b6c-11e6-94a6-2199f626a894.png)
 
 
-See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/Orange-OpenSource/sample-pivotal-tracker-mirror 
+See sample partial attempt with the [](https://www.pivotaltracker.com/n/projects/997278) mirrored into https://github.com/cf-tm-bot/buildpacks 
 
 List of mirrored stories
 
