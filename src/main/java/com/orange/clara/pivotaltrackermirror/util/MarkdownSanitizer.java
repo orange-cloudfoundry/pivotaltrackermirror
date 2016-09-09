@@ -12,7 +12,7 @@ package com.orange.clara.pivotaltrackermirror.util;
  */
 public class MarkdownSanitizer {
     public static final String EMAIL_PATTERN = "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z0-9]{2,6}";
-    public static final String MENTION_GITHUB_USER = "\\[(\\w|@)+\\]\\(https://github.com/([^/]+)\\)";
+    public static final String MENTION_GITHUB_USER = "\\[(\\w|@)+\\]\\(https://github\\.com/([^/]+)\\)";
     public static final String MENTION_PT_USER = "(?m)(^| +)@(\\w+)";
 
     public static String sanitize(String text) {

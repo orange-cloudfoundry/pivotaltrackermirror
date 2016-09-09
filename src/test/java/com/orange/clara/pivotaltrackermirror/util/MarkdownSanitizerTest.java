@@ -130,7 +130,7 @@ public class MarkdownSanitizerTest {
                 "    Ran 3 of 3 Specs in 0.492 seconds\n" +
                 "    FAIL! -- 0 Passed | 3 Failed | 0 Pending | 0 Skipped\n" +
                 "```\n" +
-                "Filed by [ihr](https://github.com/ihr)";
+                "Filed by [@ihr](https://github.com/ihr)";
         System.out.println(MarkdownSanitizer.sanitize(text));
     }
 
