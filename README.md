@@ -34,7 +34,7 @@ Mirroring a PT projet stories into github issues provides the following benefits
 
 ### From Api
 
-This application provide an api more than a frontend. Developper or user can use this api.
+This application provides an api more than a frontend. Developers or users can use this api.
 
 [Click here to see the api documentation](/src/docs/asciidoc/generated/api.adoc)
 
