@@ -9,7 +9,7 @@ Mirror a pivotal tracker (PT) project to an another tracker system (only github 
 
 Mirroring a PT projet stories into github issues provides the following benefits:
 * leverage the [watching notifications](https://help.github.com/articles/about-notifications/#types-of-notifications) github feature to track progress on public pivotal trackers which lacks such self-service update notification feature
-* leverage [github search features](https://help.github.com/articles/searching-github) to search PT content (e.g. accross multiple  mirrored PT projects, or along with other github repositories)
+* leverage [github search features](https://help.github.com/articles/searching-github) to search PT content (e.g. accross multiple  mirrored PT projects, or along with other github repositories), including permalink URLs that return search results (e.g. for [identity and refresh tokens](https://github.com/cf-tm-bot/identity/search?q=refresh&type=Issues&utf8=%E2%9C%93))
 * leverage [github @mentions](https://help.github.com/articles/basic-writing-and-formatting-syntax/#mentioning-users-and-teams) to contact github accounts associated with PT public projects contributors, in the context with a specific mirrored story
 * mirrored content becomes discoverable: search engines would index it, making it easier to find mirrored PT such as a stack trace
 
